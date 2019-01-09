@@ -5,7 +5,7 @@ import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
-import fr.epsi.lougar.controlleur.ControlleurIndex;
+import fr.epsi.lougar.controlleur.ControlleurFichier;
 
 public class LoupGar {
 	
@@ -15,7 +15,11 @@ public class LoupGar {
 		try {
 			server = HttpServer.create(new InetSocketAddress(31000), 0);
 			
-			server.createContext("/", new ControlleurIndex());
+			//pour ajouter une page on la met a /
+			server.createContext("/", new ControlleurFichier("publique/pages/index.html"));
+			
+			//pour ajouter un fichier image, script, ... on le met a /res/
+			server.createContext("/res/image.png", new ControlleurFichier("publique/images/image.png"));
 			
 			server.setExecutor(null);
 			server.start();
