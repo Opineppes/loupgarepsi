@@ -19,6 +19,8 @@ public class LoupGar {
 			server.createContext("/", new ControlleurFichier("publique/pages/index.html", "text/html"));
 			
 			//pour ajouter un fichier image, script, ... on le met a /res/
+			server.createContext("/res/bootstrap.min.css", new ControlleurFichier("publique/css/bootstrap.min.css"));
+			server.createContext("/res/bootstrap.min.js", new ControlleurFichier("publique/js/bootstrap.min.js"));
 			server.createContext("/res/image.png", new ControlleurFichier("publique/images/image.png"));
 			
 			server.setExecutor(null);
