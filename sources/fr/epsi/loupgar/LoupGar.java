@@ -1,11 +1,11 @@
-package fr.epsi.lougar;
+package fr.epsi.loupgar;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
-import fr.epsi.lougar.controlleur.ControlleurFichier;
+import fr.epsi.loupgar.controlleur.ControlleurFichier;
 
 public class LoupGar {
 	

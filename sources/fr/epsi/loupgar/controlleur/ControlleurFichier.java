@@ -1,4 +1,4 @@
-package fr.epsi.lougar.controlleur;
+package fr.epsi.loupgar.controlleur;
 
 import java.io.IOException;
 import java.io.InputStream;
