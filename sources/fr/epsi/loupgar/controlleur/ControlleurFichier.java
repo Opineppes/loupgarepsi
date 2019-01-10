@@ -1,5 +1,6 @@
 package fr.epsi.loupgar.controlleur;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,13 +29,16 @@ public class ControlleurFichier implements HttpHandler {
 		t.sendResponseHeaders(200, 0);
 		
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 		OutputStream outputStream = t.getResponseBody();
 		
-		byte[] buffer = new byte[inputStream.available()];
-		inputStream.read(buffer);
-		outputStream.write(buffer);
+		while(bufferedInputStream.available() > 0) {
+			byte[] buffer = new byte[Short.MAX_VALUE];
+			bufferedInputStream.read(buffer);
+			outputStream.write(buffer);
+		}
 		
-		inputStream.close();
+		bufferedInputStream.close();
 		outputStream.close();
 	}
 
