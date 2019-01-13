@@ -2,38 +2,33 @@ package fr.epsi.loupgar.controlleur;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import fr.epsi.loupgar.model.Session;
+import fr.epsi.loupgar.utils.FileLoader;
 import fr.epsi.loupgar.utils.HttpHandlerBlocker;
-import fr.epsi.loupgar.utils.HttpSession;
 
 public class ControlleurIndex extends HttpHandlerBlocker {
 
 	@Override
-	public void handleIfNotBlocked(HttpExchange exchange) throws IOException {
-		String session = HttpSession.startSession(exchange);
-		
+	public void handleIfNotBlocked(HttpExchange exchange) throws IOException 
+	{
+		Session session = Session.startSession(exchange);
 		exchange.getResponseHeaders().add("Content-Type", "text/html");
 		exchange.sendResponseHeaders(200, 0);
-		
+
 		//recuperation du flux de sortie
 		OutputStream outputStream = exchange.getResponseBody();
 		
-		//affichage des infos contenu dans le header de la requete
-		for(String header : exchange.getRequestHeaders().keySet()) 
+		if(session.accountID != -1)
 		{
-			outputStream.write((header + ":\n").getBytes());
-			List<String> list = exchange.getRequestHeaders().get(header);
-			for(String value : list)
-			{
-				outputStream.write(("\t" + value + "\n").getBytes());
-			}
-			
+			FileLoader.writeFileOnStream("publique/pages/jeu.html", outputStream);
 		}
-		
-		outputStream.write(("\n" + session).getBytes());
+		else
+		{
+			FileLoader.writeFileOnStream("publique/pages/connexion.html", outputStream);
+		}
 		
 		//fermeture du flux de sortie
 		exchange.close();
